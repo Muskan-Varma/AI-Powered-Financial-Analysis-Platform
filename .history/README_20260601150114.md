@@ -1,0 +1,141 @@
+```markdown
+# AI-Powered Financial Analysis Platform
+
+A complete end-to-end financial analysis platform built with PySpark, Machine Learning, SQLite, LLaMA AI, and Streamlit.
+
+## Project Overview
+
+This platform downloads real stock data, processes it using PySpark, stores it in SQLite, trains ML models for forecasting and investment signals, provides an AI chatbot powered by LLaMA 3.2, and displays everything on an interactive dashboard.
+
+## Tech Stack
+
+- **Data Collection**: yfinance
+- **Big Data Processing**: PySpark 3.5
+- **Database**: SQLite
+- **ML Forecasting**: PySpark GBT (Gradient Boosted Trees)
+- **ML Classification**: Scikit-learn Random Forest
+- **AI Chatbot**: Ollama + LLaMA 3.2
+- **Dashboard**: Streamlit + Matplotlib
+- **Testing**: Pytest
+
+## Project Structure
+
+```
+project_template/
+├── main.py                          # Main pipeline orchestrator
+├── config/config.py                 # Configuration settings
+├── data_collection/
+│   └── stock_downloader.py          # Downloads stock data via yfinance
+├── preprocessing/
+│   └── spark_preprocessor.py        # PySpark feature engineering
+├── sql_interface/
+│   └── database_manager.py          # SQLite database operations
+├── ml_models/
+│   ├── spark_gbt_forecaster.py      # GBT price forecasting
+│   └── investment_classifier.py     # Buy/Hold/Sell classifier
+├── chatbot/
+│   └── ai_prediction_chatbot.py     # LLaMA 3.2 AI chatbot
+├── dashboard/
+│   └── dashboard_app.py             # Streamlit dashboard
+├── tests/
+│   └── test_pipeline.py             # Pytest test suite (17 tests)
+└── data/
+    ├── stock_data/                  # Raw CSV files
+    ├── processed_stocks.parquet     # PySpark processed data
+    ├── financial_data.db            # SQLite database
+    └── models/                      # Trained ML models
+```
+
+## Setup & Installation
+
+### Prerequisites
+- Python 3.10
+- Java 16+ (for PySpark)
+- Anaconda (recommended)
+
+### 1. Set Environment Variables
+```bash
+setx JAVA_HOME "C:\Program Files\Java\jdk-16.0.2"
+setx HADOOP_HOME "C:\hadoop" /M
+setx PATH "%PATH%;C:\hadoop\bin" /M
+```
+
+### 2. Install Dependencies
+```bash
+pip install --upgrade pip
+pip install pyspark==3.5.0
+pip install pandas numpy yfinance scikit-learn streamlit matplotlib ollama pytest requests sqlalchemy
+pip install --upgrade yfinance
+```
+
+### 3. Install Ollama + LLaMA 3.2
+- Download Ollama: https://ollama.com/download/windows
+```bash
+ollama pull llama3.2
+```
+
+### 4. Setup winutils (Windows only)
+- Download `winutils.exe` and `hadoop.dll` from hadoop-3.3.6
+- Place in `C:\hadoop\bin\`
+
+## Running the Project
+
+### Full Pipeline (all steps)
+```bash
+python main.py
+```
+
+### Individual Components
+```bash
+# Data Collection only
+python data_collection/stock_downloader.py
+
+# Preprocessing only
+python preprocessing/spark_preprocessor.py
+
+# Database setup only
+python sql_interface/database_manager.py
+
+# GBT Forecasting only
+python ml_models/spark_gbt_forecaster.py
+
+# Investment Classifier only
+python ml_models/investment_classifier.py
+
+# AI Chatbot
+python chatbot/ai_prediction_chatbot.py
+
+# Dashboard
+streamlit run dashboard/dashboard_app.py
+
+# Tests
+python -m pytest tests/test_pipeline.py -v
+```
+
+## Features
+
+- **5 Stocks**: AAPL, MSFT, GOOGL, AMZN, TSLA
+- **8040 rows** of processed data with 14 features
+- **Technical Indicators**: MA(7/30/90), RSI, Volatility, Daily Return, Sharpe Ratio
+- **GBT Models**: Trained per ticker for 7-day price forecasting
+- **66% Accuracy**: Buy/Hold/Sell classifier
+- **AI Chatbot**: Ask natural language questions about any stock
+- **Interactive Dashboard**: Real-time charts, signals, RSI, volume
+- **17/17 Tests Passing**
+
+## Results
+
+| Ticker | RMSE | R2 |
+|--------|------|----|
+| AAPL | 30.45 | 0.02 |
+| TSLA | 55.95 | 0.31 |
+| GOOGL | 90.42 | -0.49 |
+| AMZN | 22.09 | -0.03 |
+| MSFT | 71.84 | -0.92 |
+
+**Classifier Accuracy: 65.4%**
+
+## Disclaimer
+
+This project is for educational purposes only. Not financial advice.
+```
