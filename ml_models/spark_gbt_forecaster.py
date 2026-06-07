@@ -6,6 +6,7 @@ from pyspark.sql.window import Window
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.regression import GBTRegressor
 from pyspark.ml.evaluation import RegressionEvaluator
+from pyspark.ml.feature import StandardScaler
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config.config import PROCESSED_DATA_DIR, MODEL_DIR, GBT_MAX_ITER, GBT_MAX_DEPTH, GBT_LEARNING_RATE
@@ -64,7 +65,7 @@ class SparkGBTForecaster:
         df.count()
 
         # Target: Close price 7 days in future
-        df = df.withColumn('target', F.lead('Close', 7).over(w))
+        df = df.withColumn('target', F.lead('Close', 1).over(w))
         df = df.dropna()
         print(f"  Features created: {len(df.columns)} columns, {df.count()} rows")
         return df
@@ -73,10 +74,12 @@ class SparkGBTForecaster:
         feature_cols = [c for c in df.columns if '_lag_' in c]
         print(f"  Total lag features: {len(feature_cols)}")
 
-        assembler = VectorAssembler(inputCols=feature_cols, outputCol='features', handleInvalid='skip')
-        df = assembler.transform(df).select('Date', 'Ticker', 'features', 'target')
-        df = df.cache()
-        df.count()
+        assembler = VectorAssembler(inputCols=feature_cols, outputCol='features_raw', handleInvalid='skip')
+        df = assembler.transform(df)
+
+        scaler = StandardScaler(inputCol='features_raw', outputCol='features', withStd=True, withMean=True)
+        scaler_model = scaler.fit(df)
+        df = scaler_model.transform(df).select('Date', 'Ticker', 'features', 'target')
 
         total = df.count()
         train_size = int(total * 0.8)
@@ -102,7 +105,8 @@ class SparkGBTForecaster:
             maxIter=GBT_MAX_ITER,
             maxDepth=GBT_MAX_DEPTH,
             stepSize=GBT_LEARNING_RATE,
-            subsamplingRate=0.8
+            subsamplingRate=0.8,
+            minInstancesPerNode=10
         )
         model = gbt.fit(train_df)
         return model

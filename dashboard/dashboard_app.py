@@ -389,8 +389,8 @@ def main():
         st.subheader("Model Performance")
         perf_df = pd.DataFrame({
             'Ticker': ['AAPL', 'TSLA', 'GOOGL', 'AMZN', 'MSFT'],
-            'RMSE ($)': [38.05, 46.46, 129.52, 24.58, 63.53],
-            'Mean % Error': ['12.76%', '8.68%', '38.17%', '7.64%', '10.58%']
+            'RMSE ($)': [33.10, 29.88, 128.67, 22.55, 38.12],
+            'Mean % Error': ['10.76%', '5.56%', '37.96%', '7.15%', '6.09%']
         })
         st.dataframe(perf_df, use_container_width=True, hide_index=True)
 
