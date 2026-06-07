@@ -125,34 +125,6 @@ def sidebar_menu():
                 st.code(result.stdout)
 
     st.sidebar.markdown("---")
-    st.sidebar.subheader("🖥️ Launch Apps")
-    
-    if st.sidebar.button("6️⃣ Run Chatbot", use_container_width=True):
-        st.sidebar.info("Opening chatbot in new terminal...")
-        subprocess.Popen(
-            [sys.executable, "-m", "streamlit", "run",
-             os.path.join(PROJECT_ROOT, "chatbot", "ai_prediction_chatbot.py"),
-             "--server.port", "8502"],
-            cwd=PROJECT_ROOT
-        )
-        st.sidebar.success("✅ Chatbot started at http://localhost:8502")
-
-    st.sidebar.markdown("---")
-    st.sidebar.subheader("⚡ Quick Actions")
-
-    if st.sidebar.button("7️⃣ Run Complete Pipeline", use_container_width=True):
-        st.sidebar.warning("⏳ This will take 20-30 minutes...")
-        steps = [
-            ("Data Collection", "data_collection/stock_downloader.py", False),
-            ("Preprocessing", "preprocessing/spark_preprocessor.py", False),
-            ("Database Setup", "sql_interface/database_manager.py", True),
-            ("Investment Classifier", "ml_models/investment_classifier.py", True),
-        ]
-        for name, path, anaconda in steps:
-            run_pipeline_task(name, os.path.join(PROJECT_ROOT, path), anaconda)
-        st.sidebar.success("✅ Pipeline Complete!")
-
-    st.sidebar.markdown("---")
     st.sidebar.subheader("ℹ️ System Info")
     db_exists = os.path.exists(DB_PATH)
     model_exists = os.path.exists(CLASSIFIER_PATH)

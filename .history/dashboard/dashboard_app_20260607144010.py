@@ -124,9 +124,6 @@ def sidebar_menu():
             with st.expander("View Test Results"):
                 st.code(result.stdout)
 
-    st.sidebar.markdown("---")
-    st.sidebar.subheader("🖥️ Launch Apps")
-    
     if st.sidebar.button("6️⃣ Run Chatbot", use_container_width=True):
         st.sidebar.info("Opening chatbot in new terminal...")
         subprocess.Popen(
