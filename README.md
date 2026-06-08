@@ -19,6 +19,7 @@ This platform downloads real stock data, processes it using PySpark, stores it i
 
 ## Project Structure
 
+```bash
 project_template/
 ├── main.py                          # Main pipeline orchestrator
 ├── config/config.py                 # Configuration settings
@@ -42,6 +43,7 @@ project_template/
     ├── processed_stocks.parquet     # PySpark processed data
     ├── financial_data.db            # SQLite database
     └── models/                      # Trained ML models
+```
 
 ## Setup & Installation
 
