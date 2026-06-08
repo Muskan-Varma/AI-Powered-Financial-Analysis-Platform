@@ -1,4 +1,3 @@
-```markdown
 # AI-Powered Financial Analysis Platform
 
 A complete end-to-end financial analysis platform built with PySpark, Machine Learning, SQLite, LLaMA AI, and Streamlit.
@@ -20,7 +19,6 @@ This platform downloads real stock data, processes it using PySpark, stores it i
 
 ## Project Structure
 
-```
 project_template/
 ├── main.py                          # Main pipeline orchestrator
 ├── config/config.py                 # Configuration settings
@@ -44,7 +42,6 @@ project_template/
     ├── processed_stocks.parquet     # PySpark processed data
     ├── financial_data.db            # SQLite database
     └── models/                      # Trained ML models
-```
 
 ## Setup & Installation
 
