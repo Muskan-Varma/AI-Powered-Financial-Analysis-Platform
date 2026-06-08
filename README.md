@@ -103,7 +103,7 @@ python ml_models/spark_gbt_forecaster.py
 python ml_models/investment_classifier.py
 
 # AI Chatbot
-python chatbot/ai_prediction_chatbot.py
+streamlit run chatbot/ai_prediction_chatbot.py
 
 # Dashboard
 streamlit run dashboard/dashboard_app.py
@@ -135,7 +135,4 @@ python -m pytest tests/test_pipeline.py -v
 
 **Classifier Accuracy: 65.4%**
 
-## Disclaimer
-
-This project is for educational purposes only. Not financial advice.
 ```
